@@ -1,0 +1,12 @@
+@import "tailwindcss";
+.active{
+    border:2px solid ;
+    padding: 3px;
+    border-radius: 10px;
+    background-color: #EAC79F;
+    transition: all 0.5s;
+   
+}
+.active:hover{
+ background-color:#dcb487 ;
+}
