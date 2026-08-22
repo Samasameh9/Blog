@@ -1,7 +1,8 @@
 import React from "react";
 import DeleteBlog from "./DeleteBlogButton.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
-import UpdateBlogButton from "./updateBlogButton.jsx";
+import UpdateBlogButton from "./UpdateBlogButton.jsx";
+
 
 
 
