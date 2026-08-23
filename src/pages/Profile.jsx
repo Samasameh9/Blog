@@ -39,10 +39,8 @@ export default function Profile() {
 
   async function updateUserProfile() {
     try {
-
-
       const data = {
-        DOB: DOB || userProfile?.u_DOB,
+        DOB: DOB ? DOB.substring(0, 10) : userProfile?.u_DOB?.substring(0, 10),
         gender: gender || userProfile?.u_gender,
       };
 
@@ -59,10 +57,7 @@ export default function Profile() {
         setEditGender(false);
       }
     } catch (error) {
-      console.log(
-        "Update error:",
-        error?.response?.data?.error_message
-      );
+      console.log("Update error:", error?.response?.data?.error_message);
     }
   }
 
@@ -75,44 +70,26 @@ export default function Profile() {
   return (
     <>
       <div className="text-amber-800 py-5 flex flex-col text-center md:flex-row justify-between md:w-[70%] mx-auto">
-        <h2 className="font-bold text-xl">
-          Your personal details:
-        </h2>
+        <h2 className="font-bold text-xl">Your personal details:</h2>
 
         <div className="font-bold flex gap-3 flex-col">
-
-   
           <h3>
             Your fullname:
-            <span className="font-normal">
-              {" "}
-              {userProfile?.fullname}
-            </span>
+            <span className="font-normal"> {userProfile?.fullname}</span>
           </h3>
 
-         
           <h3>
             Your email:
-            <span className="font-normal">
-              {" "}
-              {userProfile?.u_email}
-            </span>
+            <span className="font-normal"> {userProfile?.u_email}</span>
           </h3>
 
-         
           <h3>
             Your age:
-            <span className="font-normal">
-              {" "}
-              {userProfile?.age}
-            </span>
-
+            <span className="font-normal"> {userProfile?.age}</span>
             <button
               onClick={() => {
-                
                 setDOB(userProfile?.u_DOB);
                 setGender(userProfile?.u_gender);
-
                 setEditDOB(true);
               }}
               className="bg-amber-800 ms-2 border-2 border-amber-800 text-white p-1 rounded-md cursor-pointer hover:bg-[#EAC79F] hover:text-amber-800 transition-all duration-500"
@@ -121,7 +98,6 @@ export default function Profile() {
             </button>
           </h3>
 
-         
           {editDOB && (
             <div className="flex justify-center items-center gap-2">
               <input
@@ -147,17 +123,11 @@ export default function Profile() {
             </div>
           )}
 
-         
           <h3>
             Your gender:
-            <span className="font-normal">
-              {" "}
-              {userProfile?.u_gender}
-            </span>
-
+            <span className="font-normal"> {userProfile?.u_gender}</span>
             <button
               onClick={() => {
-                
                 setDOB(userProfile?.u_DOB);
                 setGender(userProfile?.u_gender);
 
@@ -169,10 +139,8 @@ export default function Profile() {
             </button>
           </h3>
 
-        
           {editGender && (
             <div className="flex justify-center items-center gap-2">
-
               <div className="border-2 rounded-md">
                 <button
                   type="button"
