@@ -23,7 +23,7 @@ export default function UpdateBlogButton({ blog, get_all_blogs }) {
       setOpen(false);
       get_all_blogs();
     } catch (error) {
-      console.log(error?.response?.data);
+      console.log(error?.response?.data?.error_message);
     }
   }
 

@@ -11,10 +11,10 @@ export default function DeleteBlog({ blog_id, get_all_blogs }) {
         toast.success("Blog deleted successfully");
         await get_all_blogs();
       } else {
-        toast.error("failed,try again");
+        toast.error(error?.response?.data?.error_message);
       }
     } catch (error) {
-      console.log(error?.response?.data);
+      console.log(error?.response?.data?.error_message);
     }
   }
 

@@ -34,10 +34,7 @@ export default function Profile() {
 
   async function updateUserProfile(field) {
     try {
-      let data = {
-        DOB: DOB,
-        gender: gender,
-      };
+      const data = field === "DOB" ? { DOB } : { gender };
 
       const result = await updateProfile(id, data);
 
@@ -50,7 +47,7 @@ export default function Profile() {
         setEditGender(false);
       }
     } catch (error) {
-      console.log(error?.response.data);
+      console.log("Update error:", error?.response?.data?.error_message);
     }
   }
 
