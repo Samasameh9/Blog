@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import  { updateUserBlog } from './../../APIS/blog/updateBlog.js'
+import toast from "react-hot-toast";
 
 
 export default function UpdateBlogButton({ blog, get_all_blogs }) {
@@ -17,18 +18,20 @@ export default function UpdateBlogButton({ blog, get_all_blogs }) {
       };
 
       const result = await updateUserBlog(blog.b_id, formData);
-
+toast.success(result?.message)
       console.log(result);
 
       setOpen(false);
       get_all_blogs();
     } catch (error) {
       console.log(error?.response?.data?.error_message);
+      toast.error(error?.response?.data?.error_message)
     }
   }
 
   return (
     <>
+  
       <button
         type="button"
         onClick={() => {

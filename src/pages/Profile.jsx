@@ -32,9 +32,13 @@ export default function Profile() {
     }
   }
 
-  async function updateUserProfile(field) {
+  async function updateUserProfile() {
     try {
-      const data = field === "DOB" ? { DOB } : { gender };
+      const data = {
+        DOB,
+        gender,
+      };
+      console.log(data);
 
       const result = await updateProfile(id, data);
 
@@ -77,7 +81,12 @@ export default function Profile() {
             Your age:
             <span className="font-normal"> {userProfile?.age}</span>
             <button
-              onClick={() => setEditDOB(true)}
+              onClick={() => {
+               
+                setDOB(userProfile?.u_DOB || "");
+                setGender(userProfile?.u_gender || "");
+                setEditDOB(true);
+              }}
               className="bg-amber-800 ms-2 border-2 border-amber-800 text-white p-1 rounded-md cursor-pointer hover:bg-[#EAC79F] hover:text-amber-800 transition-all duration-500"
             >
               Edit
@@ -94,7 +103,7 @@ export default function Profile() {
               />
 
               <button
-                onClick={() => updateUserProfile("DOB")}
+              onClick={updateUserProfile}
                 className="bg-amber-800 text-white p-1 px-3 rounded-md cursor-pointer"
               >
                 Save
@@ -113,7 +122,11 @@ export default function Profile() {
             Your gender:
             <span className="font-normal"> {userProfile?.u_gender}</span>
             <button
-              onClick={() => setEditGender(true)}
+                onClick={() => {
+                setDOB(userProfile?.u_DOB || "");
+                setGender(userProfile?.u_gender || "");
+                setEditGender(true);
+              }}
               className="bg-amber-800 ms-2 border-2 border-amber-800 text-white p-1 rounded-md cursor-pointer hover:bg-[#EAC79F] hover:text-amber-800 transition-all duration-500"
             >
               Edit
@@ -124,7 +137,7 @@ export default function Profile() {
             <div className="flex justify-center items-center gap-2">
               <div className="border-2 rounded-md">
                 <button className=" border-amber-800 bg-[#EAC79F] rounded-md px-3 py-1">
-                  Select gender
+                 {gender || "Select gender"}
                 </button>
 
                 <div className=" mt-1 w-full rounded-md border border-amber-800 bg-[#EAC79F]">
@@ -147,7 +160,7 @@ export default function Profile() {
               </div>
 
               <button
-                onClick={() => updateUserProfile("gender")}
+              onClick={updateUserProfile}
                 className="bg-amber-800 text-white p-1 px-3 rounded-md cursor-pointer"
               >
                 Save
