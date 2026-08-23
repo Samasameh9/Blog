@@ -35,9 +35,9 @@ export default function Profile() {
   async function updateUserProfile() {
     try {
       const data = {
-        DOB,
-        gender,
-      };
+      DOB: DOB || userProfile.u_DOB,
+      gender: gender || userProfile.u_gender,
+    };
       console.log(data);
 
       const result = await updateProfile(id, data);
