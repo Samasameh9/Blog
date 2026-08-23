@@ -11,38 +11,46 @@ export default function Profile() {
   const [gender, setGender] = useState("");
   const [editDOB, setEditDOB] = useState(false);
   const [editGender, setEditGender] = useState(false);
+
   const { id } = useAuth();
 
   async function getProfile() {
     try {
       const result = await getUserProfile(id);
 
-      console.log(result);
+      console.log("Profile:", result);
 
       if (result?.status === 200) {
         const user = result.data[0];
 
+        console.log("User:", user);
+        console.log("DOB from backend:", user?.u_DOB);
+        console.log("Gender from backend:", user?.u_gender);
+
         setUserProfile(user);
 
-        setDOB(user?.u_DOB || "");
-        setGender(user?.u_gender || "");
+        setDOB(user?.u_DOB);
+        setGender(user?.u_gender);
       }
     } catch (error) {
-      console.log(error.message);
+      console.log("Get profile error:", error.message);
     }
   }
 
   async function updateUserProfile() {
     try {
+
+
       const data = {
-      DOB: DOB || userProfile.u_DOB,
-      gender: gender || userProfile.u_gender,
-    };
-      console.log(data);
+        DOB: DOB || userProfile?.u_DOB,
+        gender: gender || userProfile?.u_gender,
+      };
+
+      console.log("Data sent to backend:", data);
 
       const result = await updateProfile(id, data);
 
-      console.log(result);
+      console.log("Update result:", result);
 
       if (result?.status === 200) {
         await getProfile();
@@ -51,7 +59,10 @@ export default function Profile() {
         setEditGender(false);
       }
     } catch (error) {
-      console.log("Update error:", error?.response?.data?.error_message);
+      console.log(
+        "Update error:",
+        error?.response?.data?.error_message
+      );
     }
   }
 
@@ -64,27 +75,44 @@ export default function Profile() {
   return (
     <>
       <div className="text-amber-800 py-5 flex flex-col text-center md:flex-row justify-between md:w-[70%] mx-auto">
-        <h2 className="font-bold text-xl">Your personal details:</h2>
+        <h2 className="font-bold text-xl">
+          Your personal details:
+        </h2>
 
         <div className="font-bold flex gap-3 flex-col">
+
+   
           <h3>
             Your fullname:
-            <span className="font-normal"> {userProfile?.fullname}</span>
+            <span className="font-normal">
+              {" "}
+              {userProfile?.fullname}
+            </span>
           </h3>
 
+         
           <h3>
             Your email:
-            <span className="font-normal"> {userProfile?.u_email}</span>
+            <span className="font-normal">
+              {" "}
+              {userProfile?.u_email}
+            </span>
           </h3>
 
+         
           <h3>
             Your age:
-            <span className="font-normal"> {userProfile?.age}</span>
+            <span className="font-normal">
+              {" "}
+              {userProfile?.age}
+            </span>
+
             <button
               onClick={() => {
-               
-                setDOB(userProfile?.u_DOB || "");
-                setGender(userProfile?.u_gender || "");
+                
+                setDOB(userProfile?.u_DOB);
+                setGender(userProfile?.u_gender);
+
                 setEditDOB(true);
               }}
               className="bg-amber-800 ms-2 border-2 border-amber-800 text-white p-1 rounded-md cursor-pointer hover:bg-[#EAC79F] hover:text-amber-800 transition-all duration-500"
@@ -93,6 +121,7 @@ export default function Profile() {
             </button>
           </h3>
 
+         
           {editDOB && (
             <div className="flex justify-center items-center gap-2">
               <input
@@ -103,7 +132,7 @@ export default function Profile() {
               />
 
               <button
-              onClick={updateUserProfile}
+                onClick={updateUserProfile}
                 className="bg-amber-800 text-white p-1 px-3 rounded-md cursor-pointer"
               >
                 Save
@@ -118,13 +147,20 @@ export default function Profile() {
             </div>
           )}
 
+         
           <h3>
             Your gender:
-            <span className="font-normal"> {userProfile?.u_gender}</span>
+            <span className="font-normal">
+              {" "}
+              {userProfile?.u_gender}
+            </span>
+
             <button
-                onClick={() => {
-                setDOB(userProfile?.u_DOB || "");
-                setGender(userProfile?.u_gender || "");
+              onClick={() => {
+                
+                setDOB(userProfile?.u_DOB);
+                setGender(userProfile?.u_gender);
+
                 setEditGender(true);
               }}
               className="bg-amber-800 ms-2 border-2 border-amber-800 text-white p-1 rounded-md cursor-pointer hover:bg-[#EAC79F] hover:text-amber-800 transition-all duration-500"
@@ -133,14 +169,19 @@ export default function Profile() {
             </button>
           </h3>
 
+        
           {editGender && (
             <div className="flex justify-center items-center gap-2">
+
               <div className="border-2 rounded-md">
-                <button className=" border-amber-800 bg-[#EAC79F] rounded-md px-3 py-1">
-                 {gender || "Select gender"}
+                <button
+                  type="button"
+                  className="border-amber-800 bg-[#EAC79F] rounded-md px-3 py-1"
+                >
+                  {gender || "Select gender"}
                 </button>
 
-                <div className=" mt-1 w-full rounded-md border border-amber-800 bg-[#EAC79F]">
+                <div className="mt-1 w-full rounded-md border border-amber-800 bg-[#EAC79F]">
                   <button
                     type="button"
                     onClick={() => setGender("male")}
@@ -160,7 +201,7 @@ export default function Profile() {
               </div>
 
               <button
-              onClick={updateUserProfile}
+                onClick={updateUserProfile}
                 className="bg-amber-800 text-white p-1 px-3 rounded-md cursor-pointer"
               >
                 Save
@@ -174,14 +215,17 @@ export default function Profile() {
               </button>
             </div>
           )}
+
           <DeleteProfileComponent />
         </div>
       </div>
+
       <div>
         <h2 className="text-xl text-amber-800 font-bold flex justify-center">
           Your Blogs
         </h2>
       </div>
+
       <MyBlogs />
     </>
   );
